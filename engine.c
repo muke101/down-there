@@ -23,7 +23,7 @@ void move_downwards(){
 void move_right(){
     char prev_char;
     for (int i=0; i < LINES; i++){
-        for (int j=COLS-2; j >= 0; j--){
+        for (int j=0; j < COLS-2; j++){
             int read = mvinnstr(i, j+1, &prev_char, 1);
             mvaddch(i, j, prev_char);
         }
@@ -34,7 +34,7 @@ void move_right(){
 void move_left(){
     char prev_char;
     for (int i=0; i < LINES; i++){
-        for (int j=1; j < COLS-1; j++){
+        for (int j=COLS-1; j > 0; j--){
             int read = mvinnstr(i, j-1, &prev_char, 1);
             mvaddch(i, j, prev_char);
         }
