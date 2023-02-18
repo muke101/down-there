@@ -14,12 +14,12 @@ int main(int argc, char **argv){
 
     srand(time(NULL));
     char c;
-    for (int i; i < LINES; i++){
+    for (int i=0; i < LINES; i++){
         c = (char)(rand() % (127 + 1 - 32) + 32);
         mvhline(i, 0, c, COLS);
     }
 
-    mvaddch(LINES/2, COLS/2, 'O');
+    mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
 
     refresh();
     getch();
