@@ -21,11 +21,23 @@ void move_downwards(){
 }
 
 void move_right(){
-    char prev_line[COLS+1];
-    for (int i=0; i <= LINES-1; i++){
-        int read = mvinnstr(i, 0, prev_line, COLS);
-        prev_line[read+1] = '\0';
-        mvaddstr(i-1, 0, prev_line);
+    char prev_char;
+    for (int i=0; i < LINES; i++){
+        for (int j=COLS-2; j >= 0; j--){
+            int read = mvinnstr(i, j+1, &prev_char, 1);
+            mvaddch(i, j, prev_char);
+        }
+    }
+    refresh();
+}
+
+void move_left(){
+    char prev_char;
+    for (int i=0; i < LINES; i++){
+        for (int j=1; j < COLS-1; j++){
+            int read = mvinnstr(i, j-1, &prev_char, 1);
+            mvaddch(i, j, prev_char);
+        }
     }
     refresh();
 }
