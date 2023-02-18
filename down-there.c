@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <curses.h>
-#include <time.h>
+#include "down-there.h"
 
 int main(int argc, char **argv){
     initscr();
@@ -22,6 +19,8 @@ int main(int argc, char **argv){
     mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
 
     refresh();
+    placeholder();
+
     getch();
     endwin();
 
