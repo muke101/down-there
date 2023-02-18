@@ -11,4 +11,14 @@
 
 int placeholder();
 
+void initialise();
+
+void move_upwards();
+
+void move_downwards();
+
+void move_right();
+
+void move_left();
+
 #endif //DOWN_THERE_DOWN_THERE_H
