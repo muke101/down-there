@@ -13,6 +13,12 @@ int main(int argc, char **argv){
             case 's':
                 move_downwards();
                 break;
+            case 'a':
+                move_left();
+                break;
+            case 'd':
+                move_right();
+                break;
             case 'q':
                 goto exit;
         }
