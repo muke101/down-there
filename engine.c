@@ -1,4 +1,5 @@
 #include "down-there.h"
+#include <curses.h>
 
 char **level_map;
 struct Element *elements;
@@ -52,20 +53,25 @@ void move_right(){
 void print_map(){
     for (int y = 0; y < LINES; y++){
         for (int x = 0; x < COLS; x++){
-            int level_y = window_start.y + y;
-            int level_x = window_start.x + x;
-            mvaddch(y, x, level_map[level_y][level_x]);
+            int map_y = window_start.y + y;
+            int map_x = window_start.x + x;
+            mvaddch(y, x, level_map[map_y][map_x]);
         }
     }
 
     for (int i=0; i < num_elems; i++){
         struct Element elem = elements[i];
-        for (int y=elem.start.y; y < elem.start.y + elem.size.y && y < LINES; y++){
-            for (int x=elem.start.x; x < elem.start.x + elem.size.x && x < COLS; x++){
-                int elem_y = y - elem.start.y;
-                int elem_x = x - elem.start.x;
-                if (elem.data[elem_y][elem_x])
-                    mvaddch(y, x, elem.data[elem_y][elem_x]);
+        for (int y=elem.start.y; y < elem.start.y + elem.size.y;  y++){
+            for (int x=elem.start.x; x < elem.start.x + elem.size.x; x++){
+                if (y >= window_start.y && y < LINES
+                    && x >= window_start.x && x < COLS){
+                    int elem_y = y - elem.start.y;
+                    int elem_x = x - elem.start.x;
+                    int window_y = y - window_start.y;
+                    int window_x = x - window_start.x;
+                    if (elem.data[elem_y][elem_x])
+                        mvaddch(window_y, window_x, elem.data[elem_y][elem_x]);
+                }
             }
         }
     }
