@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <time.h>
+#include <math.h>
 #include <string.h>
 
 #ifndef DOWN_THERE_DOWN_THERE_H
@@ -19,6 +20,17 @@ struct Tuple{
 struct Element{
     struct Tuple start;
     struct Tuple size;
+    char **data;
+};
+
+struct Tuple{
+    int x;
+    int y;
+};
+
+struct Element{
+    struct Tuple size;
+    struct Tuple start;
     char **data;
 };
 
