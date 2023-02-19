@@ -9,9 +9,9 @@ int main(int argc, char **argv){
         data[i] = calloc(COLS, sizeof(char));
     }
 
-    octopus.data = data;
-    octopus.size = read_element(octopus.data, 'octopus.txt');
     octopus.start.x = 0, octopus.start.y = 0;
+    octopus.data = data;
+    octopus.size = read_element(octopus.data, "octopus.txt");
 
     struct Element elements[1];
     elements[0] = octopus;

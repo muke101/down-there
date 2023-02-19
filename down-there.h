@@ -23,9 +23,9 @@ struct Element{
     char **data;
 };
 
-struct Size read_element(char **element, char* file);
+struct Tuple read_element(char **element, char* file);
 
-void initialise(struct Element* elems);
+void initialise(struct Element* elems, int n_elems);
 
 void print_map();
 

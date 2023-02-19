@@ -5,7 +5,7 @@ struct Tuple read_element(char **element, char* file){
     FILE * fp;
     fp = fopen(file, "r");
     int x=0, y=0, max_x=0;
-    fread(&cur_char, 1, 1, fp)
+    fread(&cur_char, 1, 1, fp);
     while(cur_char != EOF){
         if(cur_char != '\n'){
             switch (cur_char) {
@@ -20,7 +20,8 @@ struct Tuple read_element(char **element, char* file){
             x ++;
         }
         else{
-            max_x = max(max_x, x);
+            if(x > max_x)
+                max_x = x;
             if(x < COLS -1){
                 element[y][x] = 0;
                 x ++;
@@ -30,7 +31,7 @@ struct Tuple read_element(char **element, char* file){
                 y++;
             }
         }
-        fread(&cur_char, 1, 1, fp)
+        fread(&cur_char, 1, 1, fp);
     }
 
     struct Tuple size;
