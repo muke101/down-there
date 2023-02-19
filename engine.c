@@ -1,4 +1,5 @@
 #include "down-there.h"
+#include <curses.h>
 
 void move_upwards(){
     char prev_line[COLS+1];
@@ -42,6 +43,8 @@ void move_left(){
     refresh();
 }
 
+void layer_maps();
+
 void initialise(){
     initscr();
     intrflush(stdscr, FALSE);
@@ -52,15 +55,23 @@ void initialise(){
     int maxlines = LINES - 1;
     int maxcolumns = COLS - 1;
 
+    for (int i = 0; i < maxlines; i++){
+        level_map[i] = malloc(sizeof(char)*COLS);
+    }
+    for (int i = 0; i < maxlines; i++){
+        element_map[i] = calloc(COLS, sizeof(char));
+    }
     srand(time(NULL));
     char c;
-    for (int i=0; i < LINES; i++){
+    for (int i = 0; i < LINES; i++){
         c = (char)(rand() % (127 + 1 - 32) + 32);
+        memset(level_map[i], c, COLS);
+    }
+    level_map[LINES/2 - 1][COLS/2 - 1] = 'O';
+
+    for (int i = 0; i < LINES; i++){
         mvhline(i, 0, c, COLS);
     }
 
-    mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
-
     refresh();
-
 }

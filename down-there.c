@@ -22,6 +22,7 @@ int main(int argc, char **argv){
             case 'q':
                 goto exit;
         }
+        mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
     } while (true);
     exit:
 
