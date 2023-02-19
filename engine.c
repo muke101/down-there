@@ -1,5 +1,6 @@
 #include "down-there.h"
 #include <curses.h>
+#include <stdlib.h>
 
 char **level_map;
 struct Element *elements;
@@ -8,7 +9,33 @@ struct Tuple map_size;
 struct Tuple window_start;
 
 void reallocate_map(){
-
+    if (window_start.y + LINES == map_size.y){
+        reallocarray(level_map, map_size.y+LINES, sizeof(char *));
+        //fill_map
+    }
+    else if (window_start.y == 0){
+        char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
+        for (int i=0; i < LINES; i++){
+            new_map[i] = malloc(sizeof(char)*COLS);
+        }
+        memcpy(new_map+LINES, level_map, map_size.y*sizeof(char *));
+        free(level_map);
+        level_map = new_map;
+        //fill
+    }
+    else if (window_start.x == 0){
+        for (int y = 0; y < map_size.y; y++){
+            char *new_row = malloc(sizeof(char)*(map_size.x+COLS));
+            memcpy(new_row+COLS, level_map[y], map_size.x);
+            free(level_map[y]);
+            level_map[y] = new_row;
+        }
+    }
+    else if (window_start.x == map_size.x){
+        for (int y = 0; y < map_size.y; y++){
+            reallocarray(level_map[y], map_size.y+COLS, sizeof(char));
+        }
+    }
 }
 
 void move_upwards(){
@@ -16,6 +43,7 @@ void move_upwards(){
         elements[i].start.y += 1;
     }
     window_start.y -= 1;
+    reallocate_map();
 }
 
 void move_downwards(){
@@ -23,6 +51,7 @@ void move_downwards(){
         elements[i].start.y -= 1;
     }
     window_start.y += 1;
+    reallocate_map();
 }
 
 void move_left(){
@@ -30,6 +59,7 @@ void move_left(){
         elements[i].start.x += 1;
     }
     window_start.x -= 1;
+    reallocate_map();
 }
 
 void move_right(){
@@ -37,6 +67,7 @@ void move_right(){
         elements[i].start.x -= 1;
     }
     window_start.x += 1;
+    reallocate_map();
 }
 
 void print_map(){
@@ -52,8 +83,8 @@ void print_map(){
         struct Element elem = elements[i];
         for (int y=elem.start.y; y < elem.start.y + elem.size.y;  y++){
             for (int x=elem.start.x; x < elem.start.x + elem.size.x; x++){
-                if (y >= window_start.y && y < 2*LINES-1
-                    && x >= window_start.x && x < 2*COLS-1){
+                if (y >= window_start.y && y < window_start.y + LINES - 1
+                    && x >= window_start.x && x < window_start.x + COLS - 1){
                     int elem_y = y - elem.start.y;
                     int elem_x = x - elem.start.x;
                     int window_y = y - window_start.y;
