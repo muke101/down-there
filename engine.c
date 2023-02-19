@@ -6,15 +6,15 @@ int num_elems;
 struct Tuple map_size;
 struct Tuple window_start;
 
+void reallocate_map(){
+
+}
+
 void move_upwards(){
     for (int i=0; i < num_elems; i++){
         elements[i].start.y += 1;
     }
     window_start.y -= 1;
-    //free(level_map[LINES-1]);
-    for (int i=LINES-1; i > 0; i--){
-        level_map[i] = level_map[i-1];
-    }
 }
 
 void move_downwards(){
@@ -50,19 +50,22 @@ void move_right(){
 }
 
 void print_map(){
-    int maxlines = LINES - 1;
-    int maxcolumns = COLS - 1;
-
-    for (int y = 0; y < maxlines; y++)
-        for (int x = 0; x < maxcolumns; x++)
-            mvaddch(y, x, level_map[y][x]);
+    for (int y = 0; y < LINES; y++){
+        for (int x = 0; x < COLS; x++){
+            int level_y = window_start.y + y;
+            int level_x = window_start.x + x;
+            mvaddch(y, x, level_map[level_y][level_x]);
+        }
+    }
 
     for (int i=0; i < num_elems; i++){
         struct Element elem = elements[i];
-        for (int y=elem.start.y; y < elem.size.y && y < maxlines; y++){
-            for (int x=elem.start.x; x < elem.size.x && x < maxcolumns; x++){
-                if (elem.data[y][x])
-                    mvaddch(y, x, elem.data[y][x]);
+        for (int y=elem.start.y; y < elem.start.y + elem.size.y && y < LINES; y++){
+            for (int x=elem.start.x; x < elem.start.x + elem.size.x && x < COLS; x++){
+                int elem_y = y - elem.start.y;
+                int elem_x = x - elem.start.x;
+                if (elem.data[elem_y][elem_x])
+                    mvaddch(y, x, elem.data[elem_y][elem_x]);
             }
         }
     }
