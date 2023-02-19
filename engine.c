@@ -30,6 +30,7 @@ void move_left(){
         elements[i].start.x += 1;
     }
     window_start.x -= 1;
+
 }
 
 void move_right(){
@@ -70,6 +71,23 @@ void print_map(){
     refresh();
 }
 
+void fill_map() {
+    srand(time(NULL));
+    int c_gen, c;
+    for (int i = 0; i < LINES * 2; i++) {
+        c_gen = rand() % 2; //(1 + 1 - (0)) + (0); // 0 to 1
+        switch (c_gen) {
+            case 0:
+                c = '~';
+                break;
+            case 1:
+                c = ' ';
+                break;
+        }
+        memset(level_map[i], c, COLS * 3);
+    }
+}
+
 void initialise(struct Element* elems, int n_elems){
     map_size.y = LINES*2;
     map_size.x = COLS*2;
@@ -82,12 +100,7 @@ void initialise(struct Element* elems, int n_elems){
     for (int i = 0; i < LINES*2; i++){
         level_map[i] = malloc(sizeof(char)*COLS*3);
     }
-    srand(time(NULL));
-    char c;
-    for (int i = 0; i < LINES*2; i++){
-        c = (char)(rand() % (127 + 1 - 32) + 32);
-        memset(level_map[i], c, COLS*3);
-    }
+    fill_map();
 
     print_map();
 }

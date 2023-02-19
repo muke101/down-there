@@ -28,6 +28,7 @@ int main(int argc, char **argv){
     while ((input = getch()) != 'q'){
         switch (input){
             case 'w':
+                // if ! cant_move.up
                 move_upwards();
                 break;
             case 's':
