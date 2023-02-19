@@ -10,6 +10,7 @@ void move_upwards(){
     for (int i=0; i < num_elems; i++){
         elements[i].start.y += 1;
     }
+    window_start.y -= 1;
     //free(level_map[LINES-1]);
     for (int i=LINES-1; i > 0; i--){
         level_map[i] = level_map[i-1];
