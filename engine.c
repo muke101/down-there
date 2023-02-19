@@ -7,8 +7,15 @@ struct Tuple map_size;
 struct Tuple window_start;
 
 void reallocate_map(){
-    if (window_start.y + LINES == map_size.y){
-        reallocarray(level_map, map_size.y+LINES, sizeof(char *));
+    if (window_start.y + LINES >= map_size.y){
+        char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
+        for (int i=map_size.y; i < map_size.y+LINES; i++){
+            new_map[i] = malloc(sizeof(char)*map_size.x);
+            memset(new_map[i], 'x', map_size.x);
+        }
+        memcpy(new_map, level_map, map_size.y*sizeof(char *));
+        free(level_map);
+        level_map = new_map;
         struct Tuple start, end;
         start.y = map_size.y, end.y = map_size.y+LINES;
         start.x = 0, end.x = map_size.x;
@@ -18,7 +25,7 @@ void reallocate_map(){
     else if (window_start.y == 0){
         char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
         for (int i=0; i < LINES; i++){
-            new_map[i] = malloc(sizeof(char)*COLS);
+            new_map[i] = malloc(sizeof(char)*map_size.x);
         }
         memcpy(new_map+LINES, level_map, map_size.y*sizeof(char *));
         free(level_map);
@@ -28,6 +35,10 @@ void reallocate_map(){
         start.x = 0, end.x = map_size.x;
         fill_map(start, end);
         map_size.y += LINES;
+        window_start.y += LINES;
+        for (int i=0; i < num_elems; i++){
+            elements[i].start.y += LINES;
+        }
     }
     else if (window_start.x == 0){
         for (int y = 0; y < map_size.y; y++){
@@ -41,10 +52,17 @@ void reallocate_map(){
         start.x = 0, end.x = COLS;
         fill_map(start, end);
         map_size.x += COLS;
+        window_start.x += COLS;
+        for (int i=0; i < num_elems; i++){
+            elements[i].start.x += COLS;
+        }
     }
-    else if (window_start.x == map_size.x){
+    else if (window_start.x + COLS >= map_size.x){
         for (int y = 0; y < map_size.y; y++){
-            reallocarray(level_map[y], map_size.y+COLS, sizeof(char));
+            char *new_row = malloc(sizeof(char)*(map_size.x+COLS));
+            memcpy(new_row, level_map[y], map_size.x);
+            free(level_map[y]);
+            level_map[y] = new_row;
         }
         struct Tuple start, end;
         start.y = 0, end.y = map_size.y;
@@ -55,25 +73,33 @@ void reallocate_map(){
 }
 
 void move_upwards(){
-
+    /* for (int i=0; i < num_elems; i++){ */
+    /*     elements[i].start.y += 1; */
+    /* } */
     window_start.y -= 1;
     reallocate_map();
 }
 
 void move_downwards(){
-
+    /* for (int i=0; i < num_elems; i++){ */
+    /*     elements[i].start.y -= 1; */
+    /* } */
     window_start.y += 1;
     reallocate_map();
 }
 
 void move_left() {
-
+    /* for (int i = 0; i < num_elems; i++) { */
+    /*     elements[i].start.x += 1; */
+    /* } */
     window_start.x -= 1;
     reallocate_map();
 }
 
 void move_right(){
-
+    /* for (int i=0; i < num_elems; i++){ */
+    /*     elements[i].start.x -= 1; */
+    /* } */
     window_start.x += 1;
     reallocate_map();
 }
@@ -139,25 +165,26 @@ void fill_map(struct Tuple start, struct Tuple end){
                 c = ' ';
                 break;
         }
-        memset(level_map[i]+start.x, c, end.x-start.x);
+        char *row = level_map[i];
+        memset(row+start.x, (char)c, end.x-start.x);
     }
 }
 
 void initialise(struct Element* elems, int n_elems){
-    map_size.y = LINES*2;
-    map_size.x = COLS*2;
-    window_start.y = LINES - 1;
-    window_start.x = COLS - 1;
+    map_size.y = LINES+1;
+    map_size.x = COLS+1;
+    window_start.y = 1;
+    window_start.x = 1;
     elements = elems;
     num_elems = n_elems;
 
-    level_map = malloc(sizeof(char *)*LINES*2);
-    for (int i = 0; i < LINES*2; i++){
-        level_map[i] = malloc(sizeof(char)*COLS*2);
+    level_map = malloc(sizeof(char *)*map_size.y);
+    for (int i = 0; i < map_size.y; i++){
+        level_map[i] = malloc(sizeof(char)*map_size.x);
     }
     struct Tuple start, end;
-    start.y = 0, start.y = 0;
-    end.y = LINES*2, end.x = COLS*2;
+    start.y = 0, start.x = 0;
+    end.y = map_size.y, end.x = map_size.x;
     fill_map(start, end);
 
     print_map();
