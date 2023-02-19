@@ -7,18 +7,27 @@ struct Tuple map_size;
 struct Tuple window_start;
 
 void reallocate_map(){
-    if (window_start.y + LINES == map_size.y){
-        reallocarray(level_map, map_size.y+LINES, sizeof(char *));
+    if (window_start.y + LINES >= map_size.y){
+        //reallocarray(level_map, map_size.y+LINES, sizeof(char *));
+        char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
+        for (int i=map_size.y; i < map_size.y+LINES; i++){
+            new_map[i] = malloc(sizeof(char)*map_size.x);
+            memset(new_map[i], 'x', map_size.x);
+        }
+        memcpy(new_map, level_map, map_size.y*sizeof(char *));
+        free(level_map);
+        level_map = new_map;
         struct Tuple start, end;
         start.y = map_size.y, end.y = map_size.y+LINES;
         start.x = 0, end.x = map_size.x;
-        fill_map(start, end);
+        //fill_map(start, end);
         map_size.y += LINES;
     }
     else if (window_start.y == 0){
         char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
         for (int i=0; i < LINES; i++){
-            new_map[i] = malloc(sizeof(char)*COLS);
+            new_map[i] = malloc(sizeof(char)*map_size.x);
+            memset(new_map[i], 'x', map_size.x);
         }
         memcpy(new_map+LINES, level_map, map_size.y*sizeof(char *));
         free(level_map);
@@ -130,25 +139,26 @@ void fill_map(struct Tuple start, struct Tuple end){
                 c = ' ';
                 break;
         }
-        memset(level_map[i]+start.x, c, end.x-start.x);
+        char *row = level_map[i];
+        memset(row+start.x, (char)c, end.x-start.x);
     }
 }
 
 void initialise(struct Element* elems, int n_elems){
-    map_size.y = LINES*2;
-    map_size.x = COLS*2;
-    window_start.y = LINES - 1;
-    window_start.x = COLS - 1;
+    map_size.y = LINES;
+    map_size.x = COLS;
+    window_start.y = 0;
+    window_start.x = 0;
     elements = elems;
     num_elems = n_elems;
 
-    level_map = malloc(sizeof(char *)*LINES*2);
-    for (int i = 0; i < LINES*2; i++){
-        level_map[i] = malloc(sizeof(char)*COLS*2);
+    level_map = malloc(sizeof(char *)*LINES);
+    for (int i = 0; i < LINES; i++){
+        level_map[i] = malloc(sizeof(char)*COLS);
     }
     struct Tuple start, end;
-    start.y = 0, start.y = 0;
-    end.y = LINES*2, end.x = COLS*2;
+    start.y = 0, start.x = 0;
+    end.y = LINES, end.x = COLS;
     fill_map(start, end);
 
     print_map();

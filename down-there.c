@@ -15,7 +15,7 @@ int main(int argc, char **argv){
         data[i] = calloc(COLS, sizeof(char));
     }
 
-    octopus.start.x = COLS - 1, octopus.start.y = LINES - 1;
+    octopus.start.x = COLS*0.5 - 1, octopus.start.y = LINES*0.5 - 1;
     octopus.data = data;
     octopus.size = read_element(octopus.data, "octopus.txt");
 
