@@ -41,14 +41,14 @@ int main(int argc, char **argv){
     struct Tuple next_player_loc;
 
     while ((input = getch()) != 'q'){
+        char next_char;
         switch (input) {
             case 'w':
                 next_player_loc.y = LINES / 2 - 2;
                 next_player_loc.x = COLS / 2 - 1;
 
-                char above_char;
-                mvinnstr(next_player_loc.y, next_player_loc.x, &above_char, 1);
-                switch (above_char) {
+                mvinnstr(next_player_loc.y, next_player_loc.x, &next_char, 1);
+                switch (next_char) {
                     case ' ':
                     case '~':
                         move_upwards();
@@ -56,13 +56,40 @@ int main(int argc, char **argv){
                 }
                 break;
             case 's':
-                move_downwards();
+                next_player_loc.y = LINES / 2;
+                next_player_loc.x = COLS / 2 - 1;
+
+                mvinnstr(next_player_loc.y, next_player_loc.x, &next_char, 1);
+                switch (next_char) {
+                    case ' ':
+                    case '~':
+                        move_downwards();
+                        break;
+                }
                 break;
             case 'a':
-                move_left();
+                next_player_loc.y = LINES / 2 - 1;
+                next_player_loc.x = COLS / 2 - 2;
+
+                mvinnstr(next_player_loc.y, next_player_loc.x, &next_char, 1);
+                switch (next_char) {
+                    case ' ':
+                    case '~':
+                        move_left();
+                        break;
+                }
                 break;
             case 'd':
-                move_right();
+                next_player_loc.y = LINES / 2 - 1;
+                next_player_loc.x = COLS / 2 ;
+
+                mvinnstr(next_player_loc.y, next_player_loc.x, &next_char, 1);
+                switch (next_char) {
+                    case ' ':
+                    case '~':
+                        move_right();
+                        break;
+                }
                 break;
         }
         print_map();
