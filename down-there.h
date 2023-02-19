@@ -20,7 +20,7 @@ struct Tuple{
 struct Element{
     struct Tuple start;
     struct Tuple size;
-    char data[LINES][COLS];
+    char **data;
 };
 
 struct Size read_element(char **element, char* file);
