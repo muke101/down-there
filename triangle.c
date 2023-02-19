@@ -8,6 +8,7 @@ struct Tuple read_element(char **element, char* file){
     fread(&cur_char, 1, 1, fp);
     while(cur_char != EOF){
         if(cur_char != '\n'){
+
             switch (cur_char) {
                 case '_':
                     cur_char = ' ';
@@ -16,20 +17,22 @@ struct Tuple read_element(char **element, char* file){
                     cur_char = 0;
                     break;
             }
-            element[y][x] = cur_char;
-            x ++;
-            if (x > COLS-1){
+
+            if (x == COLS-1){
+                cur_char = '*';
+                element[y][x] = cur_char;
                 break;
             }
+            element[y][x] = cur_char;
+            x ++;
+
         }
         else{
             if(x > max_x)
                 max_x = x;
             x=0;
             y++;
-            if (y > LINES-1){
-                break;
-            }
+
         }
         fread(&cur_char, 1, 1, fp);
     }
