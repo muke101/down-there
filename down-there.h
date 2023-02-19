@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <time.h>
+#include <math.h>
 
 #ifndef DOWN_THERE_DOWN_THERE_H
 #define DOWN_THERE_DOWN_THERE_H

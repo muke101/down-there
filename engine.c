@@ -62,6 +62,5 @@ void initialise(){
     mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
 
     refresh();
-    placeholder();
 
 }
