@@ -22,32 +22,21 @@ void move_downwards(){
     for (int i=0; i < num_elems; i++){
         elements[i].start.y -= 1;
     }
-    //free(level_map[0]);
-    for (int i=0; i < LINES-1; i++){
-        level_map[i] = level_map[i+1];
-    }
+    window_start.y += 1;
 }
 
 void move_left(){
     for (int i=0; i < num_elems; i++){
         elements[i].start.x += 1;
     }
-    for (int i=0; i < LINES; i++){
-        for (int j=COLS-1; j > 0; j--){
-            level_map[i][j] = level_map[i][j-1];
-        }
-    }
+    window_start.x -= 1;
 }
 
 void move_right(){
     for (int i=0; i < num_elems; i++){
         elements[i].start.x -= 1;
     }
-    for (int i=0; i < LINES; i++){
-        for (int j=0; j < COLS-1; j++){
-            level_map[i][j] = level_map[i][j+1];
-        }
-    }
+    window_start.x += 1;
 }
 
 void print_map(){
@@ -91,13 +80,13 @@ void initialise(struct Element* elems, int n_elems){
 
     level_map = malloc(sizeof(char *)*LINES*2);
     for (int i = 0; i < LINES*2; i++){
-        level_map[i] = malloc(sizeof(char)*COLS*2);
+        level_map[i] = malloc(sizeof(char)*COLS*3);
     }
     srand(time(NULL));
     char c;
     for (int i = 0; i < LINES*2; i++){
         c = (char)(rand() % (127 + 1 - 32) + 32);
-        memset(level_map[i], c, COLS*2);
+        memset(level_map[i], c, COLS*3);
     }
 
     print_map();
