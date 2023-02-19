@@ -63,8 +63,8 @@ void print_map(){
         struct Element elem = elements[i];
         for (int y=elem.start.y; y < elem.start.y + elem.size.y;  y++){
             for (int x=elem.start.x; x < elem.start.x + elem.size.x; x++){
-                if (y >= window_start.y && y < LINES
-                    && x >= window_start.x && x < COLS){
+                if (y >= window_start.y && y < 2*LINES-1
+                    && x >= window_start.x && x < 2*COLS-1){
                     int elem_y = y - elem.start.y;
                     int elem_x = x - elem.start.x;
                     int window_y = y - window_start.y;
@@ -97,7 +97,7 @@ void initialise(struct Element* elems, int n_elems){
     char c;
     for (int i = 0; i < LINES*2; i++){
         c = (char)(rand() % (127 + 1 - 32) + 32);
-        memset(level_map[i], c, COLS);
+        memset(level_map[i], c, COLS*2);
     }
 
     print_map();
