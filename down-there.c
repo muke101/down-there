@@ -43,7 +43,7 @@ int main(int argc, char **argv){
     while ((input = getch()) != 'q'){
         switch (input) {
             case 'w':
-                next_player_loc.y = LINES / 2;
+                next_player_loc.y = LINES / 2 - 2;
                 next_player_loc.x = COLS / 2 - 1;
 
                 char above_char;

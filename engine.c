@@ -55,33 +55,25 @@ void reallocate_map(){
 }
 
 void move_upwards(){
-    for (int i=0; i < num_elems; i++){
-        elements[i].start.y += 1;
-    }
+
     window_start.y -= 1;
     reallocate_map();
 }
 
 void move_downwards(){
-    for (int i=0; i < num_elems; i++){
-        elements[i].start.y -= 1;
-    }
+
     window_start.y += 1;
     reallocate_map();
 }
 
 void move_left() {
-    for (int i = 0; i < num_elems; i++) {
-        elements[i].start.x += 1;
-    }
+
     window_start.x -= 1;
     reallocate_map();
 }
 
 void move_right(){
-    for (int i=0; i < num_elems; i++){
-        elements[i].start.x -= 1;
-    }
+
     window_start.x += 1;
     reallocate_map();
 }
