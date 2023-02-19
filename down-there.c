@@ -41,6 +41,7 @@ int main(int argc, char **argv){
     struct Tuple next_player_loc;
 
     while ((input = getch()) != 'q'){
+        int have_convo = 0;
         char next_char;
         switch (input) {
             case 'w':
@@ -53,6 +54,8 @@ int main(int argc, char **argv){
                     case '~':
                         move_upwards();
                         break;
+                    default:
+                        have_convo = 1;
                 }
                 break;
             case 's':
@@ -93,6 +96,7 @@ int main(int argc, char **argv){
                 break;
         }
         print_map();
+        //trigger_convo();
     }
 
     endwin();

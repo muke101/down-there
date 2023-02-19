@@ -36,6 +36,8 @@ void fill_map(struct Tuple start, struct Tuple end);
 
 void initialise(struct Element* elems, int n_elems);
 
+void trigger_convo();
+
 void print_map();
 
 void move_upwards();

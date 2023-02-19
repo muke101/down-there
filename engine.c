@@ -78,6 +78,23 @@ void move_right(){
     reallocate_map();
 }
 
+
+void trigger_convo(){
+    struct Tuple convo_start;
+    struct Tuple convo_size;
+    convo_size.x = COLS - 2;
+    convo_size.y = 10;
+    convo_start.x = 0;
+    convo_start.y = LINES - 13;
+
+    for (int y = convo_start.y; y < convo_start.y + convo_size.y; y++) {
+        for (int x = convo_start.x; x < convo_start.x + convo_size.x; x++) {
+            mvaddch(y, x, "_");
+        }
+    }
+    refresh();
+}
+
 void print_map(){
     for (int y = 0; y < LINES; y++){
         for (int x = 0; x < COLS; x++){
