@@ -96,7 +96,8 @@ int main(int argc, char **argv){
                 break;
         }
         print_map();
-        //trigger_convo();
+        if(have_convo)
+            trigger_convo();
     }
 
     endwin();

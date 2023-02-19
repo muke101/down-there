@@ -115,7 +115,7 @@ void trigger_convo(){
 
     for (int y = convo_start.y; y < convo_start.y + convo_size.y; y++) {
         for (int x = convo_start.x; x < convo_start.x + convo_size.x; x++) {
-            mvaddch(y, x, "_");
+            mvaddch(y, x, '_');
         }
     }
     refresh();
