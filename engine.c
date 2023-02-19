@@ -55,7 +55,7 @@ void print_map(){
             mvaddch(y, x, level_map[y][x]);
 
     for (int i=0; i < num_elems; i++){
-        struct Element elem = elements[num_elems];
+        struct Element elem = elements[i];
         for (int y=elem.start.y; y < elem.size.y && y < maxlines; y++){
             for (int x=elem.start.x; x < elem.size.x && x < maxcolumns; x++){
                 if (elem.data[y][x])
@@ -69,7 +69,7 @@ void print_map(){
     refresh();
 }
 
-void initialise(){
+void initialise(struct Element* elems, int n_elems){
     initscr();
     intrflush(stdscr, FALSE);
     keypad(stdscr, TRUE);
@@ -78,7 +78,9 @@ void initialise(){
     clear();
     int maxlines = LINES - 1;
     int maxcolumns = COLS - 1;
-    elements = malloc(sizeof(struct Element)*100);
+
+    elements = elems;
+    num_elems = n_elems;
 
     level_map = malloc(sizeof(char *)*LINES);
     for (int i = 0; i < LINES; i++){

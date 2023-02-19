@@ -20,23 +20,12 @@ struct Tuple{
 struct Element{
     struct Tuple start;
     struct Tuple size;
-    char **data;
+    char data[LINES][COLS];
 };
 
-struct Tuple{
-    int x;
-    int y;
-};
+struct Size read_element(char **element, char* file);
 
-struct Element{
-    struct Tuple size;
-    struct Tuple start;
-    char **data;
-};
-
-int placeholder();
-
-void initialise();
+void initialise(struct Element* elems);
 
 void print_map();
 

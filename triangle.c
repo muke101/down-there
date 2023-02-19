@@ -1,6 +1,6 @@
 #include "down-there.h"
 
-struct Size read_element(char **element, char* file){
+struct Tuple read_element(char **element, char* file){
     char cur_char;
     FILE * fp;
     fp = fopen(file, "r");
@@ -33,7 +33,7 @@ struct Size read_element(char **element, char* file){
         fread(&cur_char, 1, 1, fp)
     }
 
-    struct Size size;
+    struct Tuple size;
     size.x = max_x + 1;
     size.y = y+1;
     return size;
