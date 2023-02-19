@@ -18,11 +18,6 @@ struct Tuple read_element(char **element, char* file){
                     break;
             }
 
-            if (x == COLS-1 ){
-                cur_char = '*';
-                element[y][x] = cur_char;
-                break;
-            }
             element[y][x] = cur_char;
             x ++;
 
@@ -31,10 +26,10 @@ struct Tuple read_element(char **element, char* file){
             if(x > max_x)
                 max_x = x;
             x=0;
-            y++;
-            if (y > LINES-1){
+            if (y < LINES)
+                y++;
+            else
                 break;
-            }
         }
         fread(&cur_char, 1, 1, fp);
     }
