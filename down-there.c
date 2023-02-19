@@ -11,31 +11,31 @@ int main(int argc, char **argv){
     char **data;
 
     struct Element octopus;
-    data = malloc(sizeof (char *) * LINES);
-    for (int i = 0; i < LINES; i++){
-        data[i] = calloc(COLS, sizeof(char));
+    data = malloc(sizeof (char *) * LINES*2);
+    for (int i = 0; i < LINES*2; i++){
+        data[i] = calloc(COLS*2, sizeof(char));
     }
 
     octopus.start.x = COLS*0.5 - 1, octopus.start.y = LINES*0.5 - 1;
     octopus.data = data;
     octopus.size = read_element(octopus.data, "octopus.txt");
 
-    struct Element miku;
-    data = malloc(sizeof (char *) * LINES);
-    for (int i = 0; i < LINES; i++){
-        data[i] = calloc(COLS, sizeof(char));
-    }
+    //struct Element miku;
+    /* data = malloc(sizeof (char *) * LINES); */
+    /* for (int i = 0; i < LINES; i++){ */
+    /*     data[i] = calloc(COLS, sizeof(char)); */
+    /* } */
 
-    miku.start.x = 1, miku.start.y = 1;
-    miku.data = data;
-    miku.size = read_element(miku.data, "miku.txt");
+    /* miku.start.x = 1, miku.start.y = 1; */
+    /* miku.data = data; */
+    /* miku.size = read_element(miku.data, "miku.txt"); */
 
 
-    struct Element elements[2];
+    struct Element elements[1];
     elements[0] = octopus;
-    elements[1] = miku;
+    //elements[1] = miku;
 
-    initialise(elements, 2);
+    initialise(elements, 1);
 
     int input;
     struct Tuple next_player_loc;
