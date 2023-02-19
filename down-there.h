@@ -1,6 +1,7 @@
 //
 // Created by wenjie on 18/02/23.
 //
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
@@ -10,12 +11,22 @@
 #ifndef DOWN_THERE_DOWN_THERE_H
 #define DOWN_THERE_DOWN_THERE_H
 
-char **level_map;
-char **element_map;
+struct Tuple{
+    int x;
+    int y;
+};
+
+struct Element{
+    struct Tuple start;
+    struct Tuple size;
+    char **data;
+};
 
 int placeholder();
 
 void initialise();
+
+void print_map();
 
 void move_upwards();
 

@@ -5,8 +5,8 @@ int main(int argc, char **argv){
     initialise();
 
     int input;
-    do {
-        switch ((input = getch())){
+    while ((input = getch()) != 'q'){
+        switch (input){
             case 'w':
                 move_upwards();
                 break;
@@ -19,12 +19,9 @@ int main(int argc, char **argv){
             case 'd':
                 move_right();
                 break;
-            case 'q':
-                goto exit;
         }
-        mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
-    } while (true);
-    exit:
+        print_map();
+    }
 
     endwin();
 
