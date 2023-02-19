@@ -3,6 +3,8 @@
 char **level_map;
 struct Element *elements;
 int num_elems;
+struct Tuple map_size;
+struct Tuple window_start;
 
 void move_upwards(){
     for (int i=0; i < num_elems; i++){
@@ -70,19 +72,20 @@ void print_map(){
 }
 
 void initialise(struct Element* elems, int n_elems){
-    int maxlines = LINES - 1;
-    int maxcolumns = COLS - 1;
-
+    map_size.y = LINES*2;
+    map_size.x = COLS*2;
+    window_start.y = LINES - 1;
+    window_start.x = COLS - 1;
     elements = elems;
     num_elems = n_elems;
 
-    level_map = malloc(sizeof(char *)*LINES);
-    for (int i = 0; i < LINES; i++){
-        level_map[i] = malloc(sizeof(char)*COLS);
+    level_map = malloc(sizeof(char *)*LINES*2);
+    for (int i = 0; i < LINES*2; i++){
+        level_map[i] = malloc(sizeof(char)*COLS*2);
     }
     srand(time(NULL));
     char c;
-    for (int i = 0; i < maxlines; i++){
+    for (int i = 0; i < LINES*2; i++){
         c = (char)(rand() % (127 + 1 - 32) + 32);
         memset(level_map[i], c, COLS);
     }
