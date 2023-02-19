@@ -5,9 +5,13 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <time.h>
+#include <string.h>
 
 #ifndef DOWN_THERE_DOWN_THERE_H
 #define DOWN_THERE_DOWN_THERE_H
+
+char **level_map;
+char **element_map;
 
 int placeholder();
 
