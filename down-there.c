@@ -7,9 +7,10 @@ int main(int argc, char **argv){
     cbreak();
     noecho();
     clear();
-    struct Element octopus;
 
     char **data;
+
+    struct Element octopus;
     data = malloc(sizeof (char *) * LINES);
     for (int i = 0; i < LINES; i++){
         data[i] = calloc(COLS, sizeof(char));
@@ -19,17 +20,40 @@ int main(int argc, char **argv){
     octopus.data = data;
     octopus.size = read_element(octopus.data, "octopus.txt");
 
-    struct Element elements[1];
-    elements[0] = octopus;
+    struct Element miku;
+    data = malloc(sizeof (char *) * LINES);
+    for (int i = 0; i < LINES; i++){
+        data[i] = calloc(COLS, sizeof(char));
+    }
 
-    initialise(elements, 1);
+    miku.start.x = 1, miku.start.y = 1;
+    miku.data = data;
+    miku.size = read_element(miku.data, "miku.txt");
+
+
+    struct Element elements[2];
+    elements[0] = octopus;
+    elements[1] = miku;
+
+    initialise(elements, 2);
 
     int input;
+    struct Tuple next_player_loc;
+
     while ((input = getch()) != 'q'){
-        switch (input){
+        switch (input) {
             case 'w':
-                // if ! cant_move.up
-                move_upwards();
+                next_player_loc.y = LINES / 2;
+                next_player_loc.x = COLS / 2 - 1;
+
+                char above_char;
+                mvinnstr(next_player_loc.y, next_player_loc.x, &above_char, 1);
+                switch (above_char) {
+                    case ' ':
+                    case '~':
+                        move_upwards();
+                        break;
+                }
                 break;
             case 's':
                 move_downwards();
