@@ -25,11 +25,22 @@ int main(int argc, char **argv){
     initialise(elements, 1);
 
     int input;
+    struct Tuple next_player_loc;
+
     while ((input = getch()) != 'q'){
-        switch (input){
+        switch (input) {
             case 'w':
-                // if ! cant_move.up
-                move_upwards();
+                next_player_loc.y = LINES / 2;
+                next_player_loc.x = COLS / 2 - 1;
+
+                char above_char;
+                mvinnstr(next_player_loc.y, next_player_loc.x, &above_char, 1);
+                switch (above_char) {
+                    case ' ':
+                    case '~':
+                        move_upwards();
+                        break;
+                }
                 break;
             case 's':
                 move_downwards();
