@@ -1,6 +1,4 @@
 #include "down-there.h"
-#include <curses.h>
-#include <stdlib.h>
 
 char **level_map;
 struct Element *elements;
@@ -11,7 +9,11 @@ struct Tuple window_start;
 void reallocate_map(){
     if (window_start.y + LINES == map_size.y){
         reallocarray(level_map, map_size.y+LINES, sizeof(char *));
-        //fill_map
+        struct Tuple start, end;
+        start.y = map_size.y, end.y = map_size.y+LINES;
+        start.x = 0, end.x = map_size.x;
+        fill_map(start, end);
+        map_size.y += LINES;
     }
     else if (window_start.y == 0){
         char **new_map = malloc(sizeof(char *)*(map_size.y+LINES));
@@ -21,7 +23,11 @@ void reallocate_map(){
         memcpy(new_map+LINES, level_map, map_size.y*sizeof(char *));
         free(level_map);
         level_map = new_map;
-        //fill
+        struct Tuple start, end;
+        start.y = 0, end.y = LINES;
+        start.x = 0, end.x = map_size.x;
+        fill_map(start, end);
+        map_size.y += LINES;
     }
     else if (window_start.x == 0){
         for (int y = 0; y < map_size.y; y++){
@@ -30,11 +36,21 @@ void reallocate_map(){
             free(level_map[y]);
             level_map[y] = new_row;
         }
+        struct Tuple start, end;
+        start.y = 0, end.y = map_size.y;
+        start.x = 0, end.x = COLS;
+        fill_map(start, end);
+        map_size.x += COLS;
     }
     else if (window_start.x == map_size.x){
         for (int y = 0; y < map_size.y; y++){
             reallocarray(level_map[y], map_size.y+COLS, sizeof(char));
         }
+        struct Tuple start, end;
+        start.y = 0, end.y = map_size.y;
+        start.x = map_size.x, end.x = map_size.x+COLS;
+        fill_map(start, end);
+        map_size.x += COLS;
     }
 }
 
@@ -101,11 +117,11 @@ void print_map(){
     refresh();
 }
 
-void fill_map() {
+void fill_map(struct Tuple start, struct Tuple end){
     srand(time(NULL));
     int c_gen, c;
-    for (int i = 0; i < LINES * 2; i++) {
-        c_gen = rand() % 2; //(1 + 1 - (0)) + (0); // 0 to 1
+    for (int i = start.y; i < end.y; i++) {
+        c_gen = rand() % 2;
         switch (c_gen) {
             case 0:
                 c = '~';
@@ -114,7 +130,7 @@ void fill_map() {
                 c = ' ';
                 break;
         }
-        memset(level_map[i], c, COLS * 3);
+        memset(level_map[i]+start.x, c, end.x-start.x);
     }
 }
 
@@ -128,9 +144,12 @@ void initialise(struct Element* elems, int n_elems){
 
     level_map = malloc(sizeof(char *)*LINES*2);
     for (int i = 0; i < LINES*2; i++){
-        level_map[i] = malloc(sizeof(char)*COLS*3);
+        level_map[i] = malloc(sizeof(char)*COLS*2);
     }
-    fill_map();
+    struct Tuple start, end;
+    start.y = 0, start.y = 0;
+    end.y = LINES*2, end.x = COLS*2;
+    fill_map(start, end);
 
     print_map();
 }

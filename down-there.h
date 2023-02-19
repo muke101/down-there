@@ -25,7 +25,7 @@ struct Element{
 
 struct Tuple read_element(char **element, char* file);
 
-void fill_map();
+void fill_map(struct Tuple start, struct Tuple end);
 
 void initialise(struct Element* elems, int n_elems);
 
