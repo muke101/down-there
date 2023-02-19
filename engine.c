@@ -57,9 +57,12 @@ void reallocate_map(){
             elements[i].start.x += COLS;
         }
     }
-    else if (window_start.x == map_size.x){
+    else if (window_start.x + COLS >= map_size.x){
         for (int y = 0; y < map_size.y; y++){
-            reallocarray(level_map[y], map_size.y+COLS, sizeof(char));
+            char *new_row = malloc(sizeof(char)*(map_size.x+COLS));
+            memcpy(new_row, level_map[y], map_size.x);
+            free(level_map[y]);
+            level_map[y] = new_row;
         }
         struct Tuple start, end;
         start.y = 0, end.y = map_size.y;

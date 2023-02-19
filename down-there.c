@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 
     struct Element elements[1];
     elements[0] = octopus;
-    //elements[1] = miku;
+    /elements[1] = miku;
 
     initialise(elements, 1);
 
