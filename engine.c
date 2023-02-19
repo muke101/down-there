@@ -70,12 +70,6 @@ void print_map(){
 }
 
 void initialise(struct Element* elems, int n_elems){
-    initscr();
-    intrflush(stdscr, FALSE);
-    keypad(stdscr, TRUE);
-    cbreak();
-    noecho();
-    clear();
     int maxlines = LINES - 1;
     int maxcolumns = COLS - 1;
 

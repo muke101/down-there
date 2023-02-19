@@ -1,6 +1,12 @@
 #include "down-there.h"
 
 int main(int argc, char **argv){
+    initscr();
+    intrflush(stdscr, FALSE);
+    keypad(stdscr, TRUE);
+    cbreak();
+    noecho();
+    clear();
     struct Element octopus;
 
     char **data;

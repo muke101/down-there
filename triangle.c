@@ -22,14 +22,8 @@ struct Tuple read_element(char **element, char* file){
         else{
             if(x > max_x)
                 max_x = x;
-            if(x < COLS -1){
-                element[y][x] = 0;
-                x ++;
-            }
-            else{
-                x=0;
-                y++;
-            }
+            x=0;
+            y++;
         }
         fread(&cur_char, 1, 1, fp);
     }
