@@ -18,7 +18,7 @@ struct Tuple read_element(char **element, char* file){
                     break;
             }
 
-            if (x == COLS-1){
+            if (x == COLS-1 ){
                 cur_char = '*';
                 element[y][x] = cur_char;
                 break;
