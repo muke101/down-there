@@ -14,6 +14,17 @@
 char **level_map;
 char **element_map;
 
+struct Tuple{
+    int x;
+    int y;
+};
+
+struct Element{
+    struct Tuple size;
+    struct Tuple start;
+    char **data;
+};
+
 int placeholder();
 
 void initialise();

@@ -58,8 +58,7 @@ void initialise(){
     for (int i = 0; i < maxlines; i++){
         level_map[i] = malloc(sizeof(char)*COLS);
     }
-    for (int i = 0; i < maxlines; i++){
-        element_map[i] = calloc(COLS, sizeof(char));
+    for (int i = 0; i < maxlines; i++)[i] = calloc(COLS, sizeof(char));
     }
     srand(time(NULL));
     char c;
