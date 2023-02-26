@@ -27,7 +27,7 @@ extern char **level_map;
 extern struct Element *elements;
 extern int num_elems;
 extern struct Tuple map_size;
-extern struct Tuple window_start;
+extern struct Tuple window_wrt_map;
 
 
 struct Tuple read_element(char **element, char* file);
