@@ -129,22 +129,22 @@ void print_map(){
         }
     }
 
-    /* for (int i=0; i < num_elems; i++){ */
-    /*     struct Element elem = elements[i]; */
-    /*     for (int y=elem.start.y; y < elem.start.y + elem.size.y;  y++){ */
-    /*         for (int x=elem.start.x; x < elem.start.x + elem.size.x; x++){ */
-    /*             if (y >= window_wrt_map.y && y < window_wrt_map.y + LINES - 1 */
-    /*                 && x >= window_wrt_map.x && x < window_wrt_map.x + COLS - 1){ */
-    /*                 int elem_y = y - elem.start.y; */
-    /*                 int elem_x = x - elem.start.x; */
-    /*                 int window_y = y - window_wrt_map.y; */
-    /*                 int window_x = x - window_wrt_map.x; */
-    /*                 if (elem.data[elem_y][elem_x]) */
-    /*                     mvaddch(window_y, window_x, elem.data[elem_y][elem_x]); */
-    /*             } */
-    /*         } */
-    /*     } */
-    /* } */
+     for (int i=0; i < num_elems; i++){
+         struct Element elem = elements[i];
+         for (int y=elem.start.y; y < elem.start.y + elem.size.y;  y++){
+             for (int x=elem.start.x; x < elem.start.x + elem.size.x; x++){
+                 if (y >= window_wrt_map.y && y < window_wrt_map.y + LINES - 1
+                     && x >= window_wrt_map.x && x < window_wrt_map.x + COLS - 1){
+                     int elem_y = y - elem.start.y;
+                     int elem_x = x - elem.start.x;
+                     int window_y = y - window_wrt_map.y;
+                     int window_x = x - window_wrt_map.x;
+                     if (elem.data[elem_y][elem_x])
+                         mvaddch(window_y, window_x, elem.data[elem_y][elem_x]);
+                 }
+             }
+         }
+     }
 
     mvaddch(LINES/2 - 1, COLS/2 - 1, 'O');
 
@@ -183,7 +183,7 @@ void initialise(struct Element* elems, int n_elems){
     }
     struct Tuple start, end;
     start.y = 0, start.x = 0;
-    end.y = map_size.y, end.x = map_size.x;
+    end.y = map_size.y, end.x = map_size.x; //todo: its not a coordinate
     fill_map(start, end);
 
     print_map();

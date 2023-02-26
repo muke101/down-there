@@ -11,9 +11,9 @@ int main(int argc, char **argv){
     char **data;
 
     struct Element octopus;
-    data = malloc(sizeof (char *) * LINES*2);
-    for (int i = 0; i < LINES*2; i++){
-        data[i] = calloc(COLS*2, sizeof(char));
+    data = malloc(sizeof (char *) * (LINES+1));
+    for (int i = 0; i < LINES+1; i++){
+        data[i] = calloc(COLS, sizeof(char));
     }
 
     octopus.start.x = COLS*0.5 - 1, octopus.start.y = LINES*0.5 - 1;
@@ -21,12 +21,12 @@ int main(int argc, char **argv){
     octopus.size = read_element(octopus.data, "octopus.txt");
 
     struct Element miku;
-    data = malloc(sizeof (char *) * LINES);
-    for (int i = 0; i < LINES; i++){
+    data = malloc(sizeof (char *) * (LINES+1));
+    for (int i = 0; i < LINES+1; i++){ //todo: but why do we need +1
         data[i] = calloc(COLS, sizeof(char));
     }
 
-    miku.start.x = 1, miku.start.y = 1;
+    miku.start.x = 1, miku.start.y = LINES*0.5 - 1;
     miku.data = data;
     miku.size = read_element(miku.data, "miku.txt");
 
